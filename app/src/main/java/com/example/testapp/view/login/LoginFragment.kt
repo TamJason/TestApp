@@ -62,8 +62,8 @@ class LoginFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when (requestCode) {
             REQUEST_ACCOUNT_PICKER -> {
-                if (resultCode === Activity.RESULT_OK && data != null && data.extras != null) {
-                    val accountName: String = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME)
+                if (resultCode == Activity.RESULT_OK && data != null && data.extras != null) {
+                    val accountName = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME)
                     if (accountName != null) {
                         viewModel.updateCredentials(accountName)
                         navigateToPlayList()
