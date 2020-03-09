@@ -9,8 +9,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.example.testapp.R
 import com.example.testapp.view.playlist.model.PlaylistModel
+import com.example.testapp.view.playlistdetail.PlaylistDetailFragmentArgs
 import kotlinx.android.synthetic.main.fragment_playlist.*
 
 class PlaylistFragment : Fragment() {
@@ -28,7 +30,10 @@ class PlaylistFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         playlistRecyclerView.adapter = playlistItemAdapter
-        playlistSwipeView.setOnRefreshListener { playlistViewModel.fetchPlaylist(this, REQUEST_AUTHORIZATION) }
+        playlistSwipeView.setOnRefreshListener { playlistViewModel.fetchPlaylist(this, REQUEST_AUTHORIZATION, true) }
+        playlistItemAdapter.onClick = {
+            findNavController().navigate(PlaylistFragmentDirections.toPlaylistDetail(it))
+        }
     }
 
     override fun onCreateView(
