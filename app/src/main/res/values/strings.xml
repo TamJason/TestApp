@@ -6,4 +6,7 @@
     <string name="login_fragment_sign_in">Sign In</string>
     <string name="login_fragment_no_accounts">No Google Accounts, or activate permissions</string>
     <string name="login_fragment_to_settings">Settings</string>
+    <string name="login_fragment_permission_rationale">This app needs to access your Google account (via Contacts).</string>
+    <string name="playlist_item_count">%d Videos</string>
+    <string name="playlist_no_items">No playlist found</string>
 </resources>

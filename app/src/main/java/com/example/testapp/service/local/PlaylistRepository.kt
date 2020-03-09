@@ -22,7 +22,7 @@ object PlaylistRepository {
     private fun com.google.api.services.youtube.model.Playlist.toDataModel(accountName: String): Playlist {
         return Playlist(
             id = this.id,
-            thumbnail = this.snippet.thumbnails.high.url,
+            thumbnail = this.snippet.thumbnails.standard.url,
             title = this.snippet.title,
             itemCount = this.contentDetails.itemCount.toInt(),
             accountName = accountName

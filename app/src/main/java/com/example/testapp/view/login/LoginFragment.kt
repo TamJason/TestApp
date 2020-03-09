@@ -53,7 +53,7 @@ class LoginFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
         EasyPermissions.requestPermissions(
             this,
-            "This app needs to access your Google account (via Contacts).",
+            getString(R.string.login_fragment_permission_rationale),
             REQUEST_PERMISSION_GET_ACCOUNTS,
             Manifest.permission.GET_ACCOUNTS
         )
@@ -69,7 +69,6 @@ class LoginFragment : Fragment(), EasyPermissions.PermissionCallbacks {
                         navigateToPlayList()
                     }
                 }
-
             }
         }
     }
@@ -107,8 +106,8 @@ class LoginFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
     private fun setLoginStatus(hasPermissions: Boolean) {
         loginSignInButton.isEnabled = hasPermissions
-        loginUserEmpty.visibility = if (hasPermissions) View.VISIBLE else View.GONE
-        loginGoToSettingsButton.visibility = if (hasPermissions) View.VISIBLE else View.GONE
+        loginUserEmpty.visibility = if (hasPermissions) View.GONE else View.VISIBLE
+        loginGoToSettingsButton.visibility = if (hasPermissions) View.GONE else View.VISIBLE
     }
 
     private fun navigateToPlayList() {
@@ -128,14 +127,9 @@ class LoginFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         startActivity(intent)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_login, container, false)
     }
-
 
     companion object {
         private const val REQUEST_PERMISSION_GET_ACCOUNTS = 101

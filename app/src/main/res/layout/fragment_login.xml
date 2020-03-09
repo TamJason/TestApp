@@ -32,36 +32,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         />
 
-    <!--
-    <TextView
-        android:id="@+id/loginAccountListTitle"
-        android:text="@string/login_fragment_account_list_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/loginSubtitle"
-        app:layout_constraintBottom_toTopOf="@id/loginUserList"
-        app:layout_constraintVertical_chainStyle="packed"
-        />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/loginUserList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/loginAccountListTitle"
-        app:layout_constraintBottom_toTopOf="@id/loginSignInButton"
-        android:layout_marginBottom="@dimen/spacing_small"
-        tools:itemCount="4"
-        tools:listitem="@layout/account_list_item"
-        />
-
-        -->
     <TextView
         android:id="@+id/loginUserEmpty"
         android:layout_width="wrap_content"

@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.Target
 import com.example.testapp.R
 import com.example.testapp.view.playlist.model.PlaylistModel
 import kotlinx.android.synthetic.main.playlist_item.view.*
@@ -25,9 +26,9 @@ class PlaylistItemAdapter : RecyclerView.Adapter<PlaylistItemAdapter.PlaylistIte
 
     override fun onBindViewHolder(holder: PlaylistItemViewHolder, position: Int) {
         holder.playlistTitle.text = playlistItems[position].title
-        holder.playlistItemCount.text = playlistItems[position].itemCount.toString()
+        holder.playlistItemCount.text = holder.itemView.resources.getString(R.string.playlist_item_count, playlistItems[position].itemCount)
         holder.itemView.setOnClickListener{onClick?.invoke(playlistItems[position])}
-        Glide.with(holder.itemView).load(playlistItems[position].thumbnail).into(holder.playlistThumbnail)
+        Glide.with(holder.itemView).load(playlistItems[position].thumbnail).fitCenter().into(holder.playlistThumbnail)
     }
 
     inner class PlaylistItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {

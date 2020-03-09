@@ -6,6 +6,7 @@ import com.google.api.client.json.jackson2.JacksonFactory
 import com.google.api.services.youtube.YouTube
 import com.google.api.services.youtube.model.Playlist
 import com.google.api.services.youtube.model.PlaylistItem
+import com.google.api.services.youtube.model.Video
 
 object YoutubeApiService {
     var mCredential: GoogleAccountCredential? = null
@@ -23,6 +24,18 @@ object YoutubeApiService {
             .build()
     }
 
+    fun getPlaylistTracks(playlistId: String): List<Pair<PlaylistItem, Video?>> {
+        val playlistItems = mutableListOf<Pair<PlaylistItem, Video?>>()
+        buildPlaylistItemsRequest(
+            playlistItems,
+            playlistId,
+            mService,
+            10,
+            ""
+        )
+        return playlistItems
+    }
+
     fun getPlaylist(): List<Playlist> {
         val playlistItems = mutableListOf<Playlist>()
         buildPlaylistRequest(
@@ -32,6 +45,12 @@ object YoutubeApiService {
             ""
         )
         return playlistItems
+    }
+
+    fun getVideoList(playlistItems: List<PlaylistItem>): List<Video> {
+        val request = mService.Videos().list("snippet, contentDetails")
+        request.id = playlistItems.map { it.contentDetails.videoId }.joinToString()
+        return request.execute().items
     }
 
 
@@ -57,20 +76,9 @@ object YoutubeApiService {
         }
     }
 
-    fun getPlaylistTracks(playlistId: String): List<PlaylistItem> {
-        val playlistItems = mutableListOf<PlaylistItem>()
-        buildPlaylistItemsRequest(
-            playlistItems,
-            playlistId,
-            mService,
-            10,
-            ""
-        )
-        return playlistItems
-    }
 
     private fun buildPlaylistItemsRequest(
-        playlistItems: MutableList<PlaylistItem>,
+        playlistItems: MutableList<Pair<PlaylistItem, Video?>>,
         playlistId: String,
         service: YouTube,
         maxResults: Int,
@@ -82,7 +90,14 @@ object YoutubeApiService {
             request.pageToken = it
             request.playlistId = playlistId
             val response = request.execute()
-            playlistItems.addAll(response.items)
+            val videoList = getVideoList(response.items)
+            response.items.forEach { playlistItem ->
+                playlistItems.add(
+                    Pair(
+                        playlistItem,
+                        videoList.find { it.id == playlistItem.contentDetails.videoId })
+                )
+            }
             buildPlaylistItemsRequest(
                 playlistItems,
                 playlistId,

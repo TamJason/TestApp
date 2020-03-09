@@ -59,6 +59,12 @@ class PlaylistFragment : Fragment() {
         playlistItemAdapter.playlistItems = playlists
         playlistItemAdapter.notifyDataSetChanged()
         playlistSwipeView.isRefreshing = false
+        if(playlists.isEmpty()) {
+            playlistNoItem.visibility = View.VISIBLE
+        }
+        else {
+            playlistNoItem.visibility = View.GONE
+        }
     }
 
     companion object {

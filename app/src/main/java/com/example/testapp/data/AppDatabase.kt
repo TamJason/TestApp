@@ -6,14 +6,17 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.testapp.data.dao.PlaylistDao
 import com.example.testapp.data.dao.TrackDao
+import com.example.testapp.data.dao.VideoDao
 import com.example.testapp.data.entity.Playlist
 import com.example.testapp.data.entity.Track
+import com.example.testapp.data.entity.Video
 
 
-@Database(entities = arrayOf(Playlist::class, Track::class), version = 1, exportSchema = false)
+@Database(entities = arrayOf(Playlist::class, Track::class, Video::class), version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun playlistDao(): PlaylistDao
     abstract fun trackDao(): TrackDao
+    abstract fun videoDao(): VideoDao
 
     companion object {
         // Singleton prevents multiple instances of database opening at the

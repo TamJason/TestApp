@@ -11,9 +11,7 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.testapp.R
 import com.example.testapp.view.playlistdetail.model.PlaylistTrack
-import kotlinx.android.synthetic.main.fragment_playlist.*
 import kotlinx.android.synthetic.main.fragment_playlist_detail.*
-import kotlinx.android.synthetic.main.playlist_item.*
 
 class PlaylistDetailFragment : Fragment() {
     private val playlistDetailViewModel: PlaylistDetailViewModel by viewModels()
@@ -38,7 +36,7 @@ class PlaylistDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         playlistDetailTrackRecyclerView.adapter = trackAdapter
         plalistDetailTitle.text = args.playlist.title
-        playlistDetailItemCount.text = args.playlist.itemCount.toString()
+        playlistDetailItemCount.text = getString(R.string.playlist_item_count, args.playlist.itemCount)
         Glide.with(this).load(args.playlist.thumbnail).into(playlistDetailImage)
         playlistDetailViewModel.fetchPlaylistTracks(args.playlist.id)
     }

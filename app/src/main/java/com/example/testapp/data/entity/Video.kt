@@ -4,12 +4,9 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class Track(
+data class Video(
     @PrimaryKey val id: String,
-    val title: String,
-    val author: String,
     val duration: String,
-    val thumbnail: String,
-    val playlistId: String,
-    val videoId: String
+    val title: String,
+    val channelTitle: String
 )
