@@ -47,9 +47,9 @@ object YoutubeApiService {
         return playlistItems
     }
 
-    fun getVideoList(playlistItems: List<PlaylistItem>): List<Video> {
+    fun getVideoList(videoIdList: List<String>): List<Video> {
         val request = mService.Videos().list("snippet, contentDetails")
-        request.id = playlistItems.map { it.contentDetails.videoId }.joinToString()
+        request.id = videoIdList.joinToString()
         return request.execute().items
     }
 
@@ -90,7 +90,7 @@ object YoutubeApiService {
             request.pageToken = it
             request.playlistId = playlistId
             val response = request.execute()
-            val videoList = getVideoList(response.items)
+            val videoList = getVideoList(response.items.map { it.contentDetails.videoId })
             response.items.forEach { playlistItem ->
                 playlistItems.add(
                     Pair(
