@@ -17,7 +17,7 @@ class InitializationBusinessLogic {
 
         if (isGooglePlayServicesAvailable(context)) {
             // Initialize credentials and service object.
-            YoutubeApiService.updateCredentials(GoogleAccountCredential.usingOAuth2(
+            YoutubeApiService.initService(GoogleAccountCredential.usingOAuth2(
                 context, listOf(YouTubeScopes.YOUTUBE_READONLY)
             )
                 .setBackOff(ExponentialBackOff()))

@@ -1,5 +1,6 @@
 package com.example.testapp.service.remote
 
+import com.example.testapp.config.AppConfiguration
 import com.google.api.client.extensions.android.http.AndroidHttp
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
 import com.google.api.client.json.jackson2.JacksonFactory
@@ -12,7 +13,7 @@ object YoutubeApiService {
     var mCredential: GoogleAccountCredential? = null
     private lateinit var mService: YouTube
 
-    fun updateCredentials(credentials: GoogleAccountCredential) {
+    fun initService(credentials: GoogleAccountCredential) {
         mCredential = credentials
         val transport = AndroidHttp.newCompatibleTransport()
         val jsonFactory = JacksonFactory.getDefaultInstance()
@@ -20,17 +21,17 @@ object YoutubeApiService {
             transport, jsonFactory,
             mCredential
         )
-            .setApplicationName("YouTube Data API Android Quickstart")
+            .setApplicationName("Test App")
             .build()
     }
 
     fun getPlaylistTracks(playlistId: String): List<Pair<PlaylistItem, Video?>> {
         val playlistItems = mutableListOf<Pair<PlaylistItem, Video?>>()
-        buildPlaylistItemsRequest(
+        retrievePlaylistItems(
             playlistItems,
             playlistId,
             mService,
-            10,
+            AppConfiguration.MAX_API_RESULTS,
             ""
         )
         return playlistItems
@@ -38,10 +39,10 @@ object YoutubeApiService {
 
     fun getPlaylist(): List<Playlist> {
         val playlistItems = mutableListOf<Playlist>()
-        buildPlaylistRequest(
+        retrievePlaylist(
             playlistItems,
             mService,
-            10,
+            AppConfiguration.MAX_API_RESULTS,
             ""
         )
         return playlistItems
@@ -53,8 +54,16 @@ object YoutubeApiService {
         return request.execute().items
     }
 
-
-    private fun buildPlaylistRequest(
+    /**
+     * Recursive method to fetch playlist  from Youtube service based on credentials.
+     * Stop's when nextPageToken is null
+     *
+     * @param playlistItems List of playlist
+     * @param service - youtube api service
+     * @param maxResults - maximum number of items to request
+     * @param nextPageToken - token for the next results
+     */
+    private fun retrievePlaylist(
         playlistItems: MutableList<Playlist>,
         service: YouTube,
         maxResults: Int,
@@ -67,7 +76,7 @@ object YoutubeApiService {
             request.pageToken = it
             val response = request.execute()
             playlistItems.addAll(response.items)
-            buildPlaylistRequest(
+            retrievePlaylist(
                 playlistItems,
                 service,
                 maxResults,
@@ -76,8 +85,17 @@ object YoutubeApiService {
         }
     }
 
-
-    private fun buildPlaylistItemsRequest(
+    /**
+     * Recursive method to fetch playlist items and corresponding video from Youtube service.
+     * Stop's when nextPageToken is null
+     *
+     * @param playlistItems List of results Pair of PlaylistItem and Video
+     * @param playlistId - id of the playlist to fetch it's PlaylistItems
+     * @param service - youtube api service
+     * @param maxResults - maximum number of items to request
+     * @param nextPageToken - token for the next results
+     */
+    private fun retrievePlaylistItems(
         playlistItems: MutableList<Pair<PlaylistItem, Video?>>,
         playlistId: String,
         service: YouTube,
@@ -98,7 +116,7 @@ object YoutubeApiService {
                         videoList.find { it.id == playlistItem.contentDetails.videoId })
                 )
             }
-            buildPlaylistItemsRequest(
+            retrievePlaylistItems(
                 playlistItems,
                 playlistId,
                 service,
