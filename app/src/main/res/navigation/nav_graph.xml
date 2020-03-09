@@ -22,7 +22,8 @@
         tools:layout="@layout/fragment_playlist">
         <action
             android:id="@+id/toPlaylistDetail"
-            app:destination="@id/playlistDetailFragment" />
+            app:destination="@id/playlistDetailFragment"
+            app:popUpTo="@id/playlistFragment"/>
     </fragment>
 
     <fragment
@@ -33,4 +34,5 @@
             android:name="playlist"
             app:argType="com.example.testapp.view.playlist.model.PlaylistModel"/>
     </fragment>
+
 </navigation>

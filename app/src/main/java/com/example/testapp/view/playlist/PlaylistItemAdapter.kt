@@ -27,7 +27,7 @@ class PlaylistItemAdapter : RecyclerView.Adapter<PlaylistItemAdapter.PlaylistIte
     override fun onBindViewHolder(holder: PlaylistItemViewHolder, position: Int) {
         holder.playlistTitle.text = playlistItems[position].title
         holder.playlistItemCount.text = holder.itemView.resources.getString(R.string.playlist_item_count, playlistItems[position].itemCount)
-        holder.itemView.setOnClickListener{onClick?.invoke(playlistItems[position])}
+        holder.itemView.setOnClickListener{onClick.invoke(playlistItems[position])}
         Glide.with(holder.itemView).load(playlistItems[position].thumbnail).fitCenter().into(holder.playlistThumbnail)
     }
 

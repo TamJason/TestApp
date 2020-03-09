@@ -45,7 +45,7 @@ object YoutubeApiService {
             AppConfiguration.MAX_API_RESULTS,
             ""
         )
-        return playlistItems
+        return playlistItems.filter { it.status.privacyStatus == "public" }
     }
 
     fun getVideoList(videoIdList: List<String>): List<Video> {
@@ -70,7 +70,7 @@ object YoutubeApiService {
         nextPageToken: String?
     ) {
         nextPageToken?.let {
-            val request = service.Playlists().list("snippet,contentDetails")
+            val request = service.Playlists().list("snippet,contentDetails, status")
             request.maxResults = maxResults.toLong()
             request.mine = true
             request.pageToken = it

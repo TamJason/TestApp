@@ -22,6 +22,7 @@ class PlaylistDetailFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         playlistDetailViewModel.playlistTrackLiveData.observe(this, Observer { updateTrackList(it) })
+
     }
 
     override fun onCreateView(
@@ -39,10 +40,13 @@ class PlaylistDetailFragment : Fragment() {
         playlistDetailItemCount.text = getString(R.string.playlist_item_count, args.playlist.itemCount)
         Glide.with(this).load(args.playlist.thumbnail).into(playlistDetailImage)
         playlistDetailViewModel.fetchPlaylistTracks(args.playlist.id)
+
+        playlistDetailSwipeView.setOnRefreshListener {playlistDetailViewModel.fetchPlaylistTracks(args.playlist.id, true)}
     }
 
     private fun updateTrackList(trackList: List<PlaylistTrack>) {
         trackAdapter.trackItems = trackList
         trackAdapter.notifyDataSetChanged()
+        playlistDetailSwipeView.isRefreshing = false
     }
 }

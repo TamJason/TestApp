@@ -17,7 +17,7 @@ class PlaylistBusinessLogic {
     }
 
     fun fetchPlaylistTracks(playlistId: String, forceRefresh: Boolean, context: Context): List<PlaylistTrack> {
-        return TrackRepository.fetchTracks(playlistId, false, context).map { it.toViewModel() }
+        return TrackRepository.fetchTracks(playlistId, forceRefresh, context).map { it.toViewModel() }
     }
 
     private fun Playlist.toPlayListModel(): PlaylistModel {
