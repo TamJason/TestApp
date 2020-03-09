@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.playlist_item.view.*
 
 class PlaylistItemAdapter : RecyclerView.Adapter<PlaylistItemAdapter.PlaylistItemViewHolder>() {
     var playlistItems = listOf<PlaylistModel>()
+    var onClick: (playlistModel: PlaylistModel)-> Unit = {}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaylistItemViewHolder {
         val view =
@@ -25,6 +26,7 @@ class PlaylistItemAdapter : RecyclerView.Adapter<PlaylistItemAdapter.PlaylistIte
     override fun onBindViewHolder(holder: PlaylistItemViewHolder, position: Int) {
         holder.playlistTitle.text = playlistItems[position].title
         holder.playlistItemCount.text = playlistItems[position].itemCount.toString()
+        holder.itemView.setOnClickListener{onClick?.invoke(playlistItems[position])}
         Glide.with(holder.itemView).load(playlistItems[position].thumbnail).into(holder.playlistThumbnail)
     }
 

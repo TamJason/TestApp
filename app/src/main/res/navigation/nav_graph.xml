@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loginFragment"
-    >
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/loginFragment"
@@ -14,10 +13,24 @@
 
         <action
             android:id="@+id/toPlaylistFragment"
-            app:destination="@id/playlistFragment"/>
+            app:destination="@id/playlistFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/playlistFragment"
-        android:name="com.example.testapp.view.playlist.PlaylistFragment"/>
+        android:name="com.example.testapp.view.playlist.PlaylistFragment"
+        tools:layout="@layout/fragment_playlist">
+        <action
+            android:id="@+id/toPlaylistDetail"
+            app:destination="@id/playlistDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/playlistDetailFragment"
+        android:name="com.example.testapp.view.playlistdetail.PlaylistDetailFragment"
+        tools:layout="@layout/fragment_playlist_detail">
+        <argument
+            android:name="playlist"
+            app:argType="com.example.testapp.view.playlist.model.PlaylistModel"/>
+    </fragment>
 </navigation>

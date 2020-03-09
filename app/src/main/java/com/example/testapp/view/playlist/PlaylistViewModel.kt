@@ -22,10 +22,10 @@ class PlaylistViewModel(application: Application) : AndroidViewModel(application
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.IO
 
-    fun fetchPlaylist(fragment: Fragment, requestCode: Int) {
+    fun fetchPlaylist(fragment: Fragment, requestCode: Int, forceRefresh: Boolean = false) {
         launch {
             try {
-                val result =  playlistBusinessLogic.fetchPlaylist()
+                val result =  playlistBusinessLogic.fetchPlaylist(forceRefresh, getApplication())
                 withContext(Dispatchers.Main) {
                     playlistModelMutableLiveData.value = result
                 }

@@ -1,7 +1,8 @@
 package com.example.testapp.domain
 
 import android.content.Context
-import com.example.testapp.service.YoutubeApiService
+import com.example.testapp.domain.model.Session
+import com.example.testapp.service.remote.YoutubeApiService
 import com.google.android.gms.common.ConnectionResult
 
 import com.google.android.gms.common.GoogleApiAvailability
@@ -16,10 +17,10 @@ class InitializationBusinessLogic {
 
         if (isGooglePlayServicesAvailable(context)) {
             // Initialize credentials and service object.
-            YoutubeApiService.mCredential = GoogleAccountCredential.usingOAuth2(
+            YoutubeApiService.updateCredentials(GoogleAccountCredential.usingOAuth2(
                 context, listOf(YouTubeScopes.YOUTUBE_READONLY)
             )
-                .setBackOff(ExponentialBackOff())
+                .setBackOff(ExponentialBackOff()))
             return YoutubeApiService.mCredential
         }
         return null
@@ -27,6 +28,7 @@ class InitializationBusinessLogic {
 
     fun updateAccountName(accountName: String) {
         YoutubeApiService.mCredential?.selectedAccountName = accountName
+        Session.accountName = accountName
     }
 
     /**
