@@ -5,6 +5,7 @@ import com.example.testapp.data.AppDatabase
 import com.example.testapp.data.entity.Playlist
 import com.example.testapp.service.remote.YoutubeApiService
 
+// TODO use dependency injection
 object PlaylistRepository {
 
     fun fetchPlaylist(forceRefresh: Boolean = false, context: Context, accountName: String): List<Playlist> {

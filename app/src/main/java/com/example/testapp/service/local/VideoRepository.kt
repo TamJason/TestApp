@@ -5,6 +5,7 @@ import com.example.testapp.data.AppDatabase
 import com.example.testapp.service.remote.YoutubeApiService
 import com.google.api.services.youtube.model.Video
 
+// TODO use dependency injection
 object VideoRepository {
     fun insertVideoList(videoList: List<Video>, context: Context) {
         AppDatabase.getDatabase(context).videoDao().insertList(*videoList.map { it.toDataModel() }.toTypedArray())

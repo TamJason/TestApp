@@ -2,6 +2,7 @@ package com.example.testapp.service.local
 
 import com.example.testapp.config.AppConfiguration
 
+// TODO use dependency injection
 object CacheService {
     private var cacheMap = HashMap<String, Long>()
 
@@ -13,5 +14,8 @@ object CacheService {
 
     fun updateCacheValidity(key: String) {
         cacheMap[key] = System.currentTimeMillis()
+    }
+    fun clearCache() {
+        cacheMap.clear()
     }
 }
