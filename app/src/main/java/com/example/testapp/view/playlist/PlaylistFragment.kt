@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -25,7 +26,7 @@ class PlaylistFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        (requireActivity() as? AppCompatActivity)?.supportActionBar?.title = getString(R.string.playlist_fragment_title)
         playlistRecyclerView.adapter = playlistItemAdapter
         playlistSwipeView.setOnRefreshListener { playlistViewModel.fetchPlaylist(this, REQUEST_AUTHORIZATION, true) }
         playlistItemAdapter.onClick = {

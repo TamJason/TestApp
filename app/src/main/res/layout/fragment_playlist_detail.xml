@@ -17,18 +17,6 @@
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <TextView
-        android:id="@+id/plalistDetailTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="start"
-        tools:text="This is the title"
-        android:layout_marginStart="@dimen/spacing_medium"
-        android:layout_marginEnd="@dimen/spacing_medium"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/playlistDetailImage"/>
-
-    <TextView
         android:id="@+id/playlistDetailItemCount"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -38,7 +26,7 @@
         tools:text="30"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/plalistDetailTitle"/>
+        app:layout_constraintTop_toBottomOf="@id/playlistDetailImage"/>
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/playlistDetailSwipeView"
         android:layout_width="match_parent"

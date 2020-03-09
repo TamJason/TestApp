@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -20,9 +21,7 @@ class PlaylistDetailFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         playlistDetailViewModel.playlistTrackLiveData.observe(this, Observer { updateTrackList(it) })
-
     }
 
     override fun onCreateView(
@@ -36,12 +35,13 @@ class PlaylistDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         playlistDetailTrackRecyclerView.adapter = trackAdapter
-        plalistDetailTitle.text = args.playlist.title
         playlistDetailItemCount.text = getString(R.string.playlist_item_count, args.playlist.itemCount)
         Glide.with(this).load(args.playlist.thumbnail).into(playlistDetailImage)
         playlistDetailViewModel.fetchPlaylistTracks(args.playlist.id)
 
         playlistDetailSwipeView.setOnRefreshListener {playlistDetailViewModel.fetchPlaylistTracks(args.playlist.id, true)}
+
+        (requireActivity() as? AppCompatActivity)?.supportActionBar?.title = args.playlist.title
     }
 
     private fun updateTrackList(trackList: List<PlaylistTrack>) {
